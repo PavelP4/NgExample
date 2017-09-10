@@ -13,7 +13,20 @@ var repository_model_1 = require("./repository.model");
 var ProductComponent = (function () {
     function ProductComponent() {
         this.model = new repository_model_1.Model();
+        this.targetName = "Kayak";
     }
+    ProductComponent.prototype.getClasses = function () {
+        return this.model.getProducts().length == 5 ? "bg-success" : "bg-warning";
+    };
+    ProductComponent.prototype.getProduct = function (key) {
+        return this.model.getProduct(key);
+    };
+    ProductComponent.prototype.getProducts = function () {
+        return this.model.getProducts();
+    };
+    ProductComponent.prototype.getProductCount = function () {
+        return this.getProducts().length;
+    };
     ProductComponent = __decorate([
         core_1.Component({
             selector: "app",
