@@ -7,11 +7,8 @@ import { Product } from "./product.model";
     templateUrl: "app/template.html"
 })
 export class ProductComponent {
-    model: Model = new Model();
-
-    getClasses(): string {
-        return this.model.getProducts().length == 5 ? "bg-success" : "bg-warning";
-    }
+    model: Model = new Model();    
+    selectedProduct: string;
 
     getProduct(key: number): Product {
         return this.model.getProduct(key);
@@ -19,10 +16,9 @@ export class ProductComponent {
 
     getProducts(): Product[] {
         return this.model.getProducts();
+    }   
+
+    getSelected(product: Product): boolean {
+        return product.name == this.selectedProduct;
     }
-    getProductCount(): number {
-        return this.getProducts().length;
-    }
-    
-    targetName: string = "Kayak";
 }
