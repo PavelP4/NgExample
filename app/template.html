@@ -5,33 +5,30 @@
 
 <template #validationMessage let-vo>
     <ul class="text-danger list-unstyled" *ngIf="vo.dirty && vo.invalid">            
-        <li *ngFor="let error of getValidationMessages(vo)">
+        <li *ngFor="let error of vo.getValidationMessages()">
             {{error}}
         </li>
     </ul>
 </template>
 
 <div class="bg-info p-a-1 m-b-1">Model Data: {{jsonProduct}}</div>
-<form novalidate #form="ngForm" (ngSubmit)="submitForm(form)">
+<form novalidate [formGroup]="form" (ngSubmit)="submitForm(form)">
     <div class="bg-danger p-a-1 m-b-1"
             *ngIf="formSubmitted && form.invalid">
         There are problems with the form
         <ul>
-            <li *ngFor="let error of getFormValidationMessages(form)">
+            <li *ngFor="let error of form.getFormValidationMessages()">
                 {{error}}
             </li>
         </ul>
     </div>
-    <div class="form-group">
-        <label>Name</label>
+    <div class="form-group" *ngFor="let control of form.productControls">
+        <label>{{control.label}}</label>
         <input class="form-control"  
-            name="name"
-            #name="ngModel"
-            [(ngModel)]="newProduct.name"
-            required
-            minlength="5"
-            pattern="^[A-Za-z ]+$"/>
-        <template [ngTemplateOutlet]="validationMessage" [ngOutletContext]="{$implicit: name}" ></template>
+            name="{{control.modelProperty}}"           
+            [(ngModel)]="newProduct[control.modelProperty]"            
+            formControlName="{{control.modelProperty}}"/>
+        <template [ngTemplateOutlet]="validationMessage" [ngOutletContext]="{$implicit: control}" ></template>
     </div>    
     <button class="btn btn-primary" type="submit" #btnCreate
             [disabled]="formSubmitted && form.invalid"
