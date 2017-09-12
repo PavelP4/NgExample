@@ -10,9 +10,11 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require("@angular/core");
 var repository_model_1 = require("./repository.model");
+var product_model_1 = require("./product.model");
 var ProductComponent = (function () {
     function ProductComponent() {
         this.model = new repository_model_1.Model();
+        this.newProduct = new product_model_1.Product();
     }
     ProductComponent.prototype.getProduct = function (key) {
         return this.model.getProduct(key);
@@ -20,8 +22,35 @@ var ProductComponent = (function () {
     ProductComponent.prototype.getProducts = function () {
         return this.model.getProducts();
     };
-    ProductComponent.prototype.getSelected = function (product) {
-        return product.name == this.selectedProduct;
+    Object.defineProperty(ProductComponent.prototype, "jsonProduct", {
+        get: function () {
+            return JSON.stringify(this.newProduct);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    ProductComponent.prototype.addProduct = function (p) {
+        console.log("New Product: " + this.jsonProduct);
+    };
+    ProductComponent.prototype.getValidationMessages = function (state, thingName) {
+        var thing = state.path || thingName;
+        var messages = [];
+        if (state.errors) {
+            for (var errorName in state.errors) {
+                switch (errorName) {
+                    case "required":
+                        messages.push("You must enter a " + thing);
+                        break;
+                    case "minlength":
+                        messages.push("A " + thing + " must be at least\n                        " + state.errors['minlength'].requiredLength + "\n                        characters");
+                        break;
+                    case "pattern":
+                        messages.push("The " + thing + " contains\n                        illegal characters");
+                        break;
+                }
+            }
+        }
+        return messages;
     };
     ProductComponent = __decorate([
         core_1.Component({
