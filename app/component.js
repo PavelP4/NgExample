@@ -15,6 +15,7 @@ var ProductComponent = (function () {
     function ProductComponent() {
         this.model = new repository_model_1.Model();
         this.newProduct = new product_model_1.Product();
+        this.formSubmitted = false;
     }
     ProductComponent.prototype.getProduct = function (key) {
         return this.model.getProduct(key);
@@ -50,6 +51,24 @@ var ProductComponent = (function () {
                 }
             }
         }
+        return messages;
+    };
+    ProductComponent.prototype.submitForm = function (form) {
+        this.formSubmitted = true;
+        if (form.valid) {
+            this.addProduct(this.newProduct);
+            this.newProduct = new product_model_1.Product();
+            form.reset();
+            this.formSubmitted = false;
+        }
+    };
+    ProductComponent.prototype.getFormValidationMessages = function (form) {
+        var _this = this;
+        var messages = [];
+        Object.keys(form.controls).forEach(function (k) {
+            _this.getValidationMessages(form.controls[k], k)
+                .forEach(function (m) { return messages.push(m); });
+        });
         return messages;
     };
     ProductComponent = __decorate([

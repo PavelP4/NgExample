@@ -3,16 +3,25 @@
     input.ng-dirty.ng-valid { border: 2px solid #6bc502 }
 </style>
 
-<template #validationMessage let-name>
-    <ul class="text-danger list-unstyled" *ngIf="name.dirty && name.invalid">
-        <li *ngFor="let error of getValidationMessages(name)">
+<template #validationMessage let-vo>
+    <ul class="text-danger list-unstyled" *ngIf="vo.dirty && vo.invalid">            
+        <li *ngFor="let error of getValidationMessages(vo)">
             {{error}}
         </li>
     </ul>
 </template>
 
 <div class="bg-info p-a-1 m-b-1">Model Data: {{jsonProduct}}</div>
-<form novalidate (ngSubmit)="addProduct(newProduct)">
+<form novalidate #form="ngForm" (ngSubmit)="submitForm(form)">
+    <div class="bg-danger p-a-1 m-b-1"
+            *ngIf="formSubmitted && form.invalid">
+        There are problems with the form
+        <ul>
+            <li *ngFor="let error of getFormValidationMessages(form)">
+                {{error}}
+            </li>
+        </ul>
+    </div>
     <div class="form-group">
         <label>Name</label>
         <input class="form-control"  
@@ -24,5 +33,9 @@
             pattern="^[A-Za-z ]+$"/>
         <template [ngTemplateOutlet]="validationMessage" [ngOutletContext]="{$implicit: name}" ></template>
     </div>    
-    <button class="btn btn-primary" type="submit">Create</button>
+    <button class="btn btn-primary" type="submit" #btnCreate
+            [disabled]="formSubmitted && form.invalid"
+            [class.btn-secondary]="btnCreate.disabled">
+        Create
+    </button>
 </form>
