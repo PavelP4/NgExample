@@ -33,7 +33,7 @@ var ProductComponent = (function () {
         configurable: true
     });
     ProductComponent.prototype.addProduct = function (p) {
-        console.log("New Product: " + this.jsonProduct);
+        this.model.saveProduct(p);
     };
     ProductComponent.prototype.submitForm = function (form) {
         this.formSubmitted = true;

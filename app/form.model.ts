@@ -57,17 +57,18 @@ export class ProductFormGroup extends FormGroup {
                 Validators.required,
                 Validators.pattern("^[A-Za-z ]+$"),
                 Validators.minLength(3),
-                Validators.maxLength(10)]))
-            /*
+                Validators.maxLength(10)])),
+            
             category: new ProductFormControl("Category", "category", "",
                 Validators.compose([Validators.required,
                     Validators.pattern("^[A-Za-z ]+$"),
                     Validators.minLength(3),
                     Validators.maxLength(10)])),
+
             price: new ProductFormControl("Price", "price", "",
                 Validators.compose([Validators.required,
-                Validators.pattern("^[0-9\.]+$")]))
-            */
+                Validators.pattern("^[0-9\.]+$")]))            
+
         });
     }
     get productControls(): ProductFormControl[] {

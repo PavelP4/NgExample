@@ -45,7 +45,13 @@ var ProductFormGroup = (function (_super) {
                 forms_1.Validators.required,
                 forms_1.Validators.pattern("^[A-Za-z ]+$"),
                 forms_1.Validators.minLength(3),
-                forms_1.Validators.maxLength(10)]))
+                forms_1.Validators.maxLength(10)])),
+            category: new ProductFormControl("Category", "category", "", forms_1.Validators.compose([forms_1.Validators.required,
+                forms_1.Validators.pattern("^[A-Za-z ]+$"),
+                forms_1.Validators.minLength(3),
+                forms_1.Validators.maxLength(10)])),
+            price: new ProductFormControl("Price", "price", "", forms_1.Validators.compose([forms_1.Validators.required,
+                forms_1.Validators.pattern("^[0-9\.]+$")]))
         });
     }
     Object.defineProperty(ProductFormGroup.prototype, "productControls", {
