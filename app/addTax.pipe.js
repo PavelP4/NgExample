@@ -9,22 +9,22 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require("@angular/core");
-var platform_browser_1 = require("@angular/platform-browser");
-var component_1 = require("./component");
-var forms_1 = require("@angular/forms");
-var attr_directive_1 = require("./attr.directive");
-var addTax_pipe_1 = require("./addTax.pipe");
-var AppModule = (function () {
-    function AppModule() {
+var PaAddTaxPipe = (function () {
+    function PaAddTaxPipe() {
+        this.defaultRate = 10;
     }
-    AppModule = __decorate([
-        core_1.NgModule({
-            imports: [platform_browser_1.BrowserModule, forms_1.FormsModule, forms_1.ReactiveFormsModule],
-            declarations: [component_1.ProductComponent, attr_directive_1.PaAttrDirective, addTax_pipe_1.PaAddTaxPipe],
-            bootstrap: [component_1.ProductComponent]
+    PaAddTaxPipe.prototype.transform = function (value, rate) {
+        var valueNumber = Number.parseFloat(value);
+        var rateNumber = rate == undefined ?
+            this.defaultRate : Number.parseInt(rate);
+        return (valueNumber + (valueNumber * (rateNumber / 100))).toFixed(2);
+    };
+    PaAddTaxPipe = __decorate([
+        core_1.Pipe({
+            name: "addTax"
         }), 
         __metadata('design:paramtypes', [])
-    ], AppModule);
-    return AppModule;
+    ], PaAddTaxPipe);
+    return PaAddTaxPipe;
 }());
-exports.AppModule = AppModule;
+exports.PaAddTaxPipe = PaAddTaxPipe;
